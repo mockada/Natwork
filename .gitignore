@@ -18,6 +18,9 @@ profile
 DerivedData
 *.hmap
 *.ipa
+*.lock
+Example/Pods/
+*.xcworkspace
 
 # Bundler
 .bundle
