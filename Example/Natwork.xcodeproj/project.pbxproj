@@ -15,6 +15,8 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		C8F7DF019E103407DE196F23 /* Pods_Natwork_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9CC51D96B5EBDCCD4C80153 /* Pods_Natwork_Tests.framework */; };
+		D537375027FB8AC700D1A4BC /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537374F27FB8AC700D1A4BC /* Service.swift */; };
+		D537375227FB955600D1A4BC /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537375127FB955600D1A4BC /* Endpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2C18AC77EC89C1C1283CEA8D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		2C18AC77EC89C1C1283CEA8D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		381BC96CE80DDBAC2563A00D /* Pods_Natwork_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Natwork_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* Natwork_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Natwork_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -40,11 +42,13 @@
 		607FACE51AFB9204008FA782 /* Natwork_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Natwork_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		8B1120CCF11184845617A309 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		AECE904AC40ED670C6F333CA /* Natwork.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = Natwork.podspec; path = ../Natwork.podspec; sourceTree = "<group>"; };
+		8B1120CCF11184845617A309 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		AECE904AC40ED670C6F333CA /* Natwork.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Natwork.podspec; path = ../Natwork.podspec; sourceTree = "<group>"; };
 		B9CC51D96B5EBDCCD4C80153 /* Pods_Natwork_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Natwork_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA95B117F5DDF0AE67ABDF64 /* Pods-Natwork_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Natwork_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Natwork_Tests/Pods-Natwork_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		D3212BF24DB01DFFC5D3ABB2 /* Pods-Natwork_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Natwork_Tests.release.xcconfig"; path = "Target Support Files/Pods-Natwork_Tests/Pods-Natwork_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		D537374F27FB8AC700D1A4BC /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		D537375127FB955600D1A4BC /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		E2DBA7DD852604F7219AAFBD /* Pods-Natwork_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Natwork_Example.debug.xcconfig"; path = "Target Support Files/Pods-Natwork_Example/Pods-Natwork_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F8F69801A03E87AFFB8757A4 /* Pods-Natwork_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Natwork_Example.release.xcconfig"; path = "Target Support Files/Pods-Natwork_Example/Pods-Natwork_Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,7 +90,6 @@
 				BA95B117F5DDF0AE67ABDF64 /* Pods-Natwork_Tests.debug.xcconfig */,
 				D3212BF24DB01DFFC5D3ABB2 /* Pods-Natwork_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -114,8 +117,10 @@
 		607FACD21AFB9204008FA782 /* Example for Natwork */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				D537374F27FB8AC700D1A4BC /* Service.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				D537375127FB955600D1A4BC /* Endpoint.swift */,
+				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -227,6 +232,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -333,6 +339,8 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				D537375227FB955600D1A4BC /* Endpoint.swift in Sources */,
+				D537375027FB8AC700D1A4BC /* Service.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

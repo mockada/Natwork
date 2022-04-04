@@ -7,12 +7,29 @@
 //
 
 import UIKit
+import Natwork
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let service = Service(network: Network())
+        service.fetchData { result in
+            switch result {
+            case .success(let responseList):
+                // do something
+                print(responseList)
+                
+            case .failure(let error) where error == .objectParse:
+                // do something
+                break
+                
+            case .failure:
+                // do something
+                break
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
