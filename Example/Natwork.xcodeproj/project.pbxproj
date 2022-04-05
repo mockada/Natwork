@@ -13,10 +13,15 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		607FACEC1AFB9204008FA782 /* ServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* ServiceTests.swift */; };
 		C8F7DF019E103407DE196F23 /* Pods_Natwork_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9CC51D96B5EBDCCD4C80153 /* Pods_Natwork_Tests.framework */; };
 		D537375027FB8AC700D1A4BC /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537374F27FB8AC700D1A4BC /* Service.swift */; };
 		D537375227FB955600D1A4BC /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537375127FB955600D1A4BC /* Endpoint.swift */; };
+		D5D1760B27FCD5AC00BC4546 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537374F27FB8AC700D1A4BC /* Service.swift */; };
+		D5D1760C27FCD5C900BC4546 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537375127FB955600D1A4BC /* Endpoint.swift */; };
+		D5D1760E27FCE1BE00BC4546 /* NetworkMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D1760D27FCE1BE00BC4546 /* NetworkMock.swift */; };
+		D5D1761027FCE25D00BC4546 /* Response+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D1760F27FCE25C00BC4546 /* Response+Extensions.swift */; };
+		D5D1761227FCE26B00BC4546 /* Request+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D1761127FCE26B00BC4546 /* Request+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +46,7 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* Natwork_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Natwork_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		607FACEB1AFB9204008FA782 /* ServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTests.swift; sourceTree = "<group>"; };
 		8B1120CCF11184845617A309 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		AECE904AC40ED670C6F333CA /* Natwork.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Natwork.podspec; path = ../Natwork.podspec; sourceTree = "<group>"; };
 		B9CC51D96B5EBDCCD4C80153 /* Pods_Natwork_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Natwork_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +54,9 @@
 		D3212BF24DB01DFFC5D3ABB2 /* Pods-Natwork_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Natwork_Tests.release.xcconfig"; path = "Target Support Files/Pods-Natwork_Tests/Pods-Natwork_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D537374F27FB8AC700D1A4BC /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		D537375127FB955600D1A4BC /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		D5D1760D27FCE1BE00BC4546 /* NetworkMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMock.swift; sourceTree = "<group>"; };
+		D5D1760F27FCE25C00BC4546 /* Response+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Response+Extensions.swift"; sourceTree = "<group>"; };
+		D5D1761127FCE26B00BC4546 /* Request+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+Extensions.swift"; sourceTree = "<group>"; };
 		E2DBA7DD852604F7219AAFBD /* Pods-Natwork_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Natwork_Example.debug.xcconfig"; path = "Target Support Files/Pods-Natwork_Example/Pods-Natwork_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F8F69801A03E87AFFB8757A4 /* Pods-Natwork_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Natwork_Example.release.xcconfig"; path = "Target Support Files/Pods-Natwork_Example/Pods-Natwork_Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,8 +149,11 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				607FACEB1AFB9204008FA782 /* ServiceTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				D5D1760D27FCE1BE00BC4546 /* NetworkMock.swift */,
+				D5D1760F27FCE25C00BC4546 /* Response+Extensions.swift */,
+				D5D1761127FCE26B00BC4546 /* Request+Extensions.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -348,7 +359,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				D5D1760E27FCE1BE00BC4546 /* NetworkMock.swift in Sources */,
+				607FACEC1AFB9204008FA782 /* ServiceTests.swift in Sources */,
+				D5D1760C27FCD5C900BC4546 /* Endpoint.swift in Sources */,
+				D5D1761227FCE26B00BC4546 /* Request+Extensions.swift in Sources */,
+				D5D1761027FCE25D00BC4546 /* Response+Extensions.swift in Sources */,
+				D5D1760B27FCD5AC00BC4546 /* Service.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
