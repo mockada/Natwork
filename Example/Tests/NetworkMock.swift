@@ -15,17 +15,17 @@ enum MockError: Error {
     case conversionError
 }
 
-final class NetworkMock: Networking {
+public final class NetworkMock: Networking {
     typealias U = Decodable
     
     var fetchDataUrlTextWithResultTypeExpectedResult: (Result<U, ApiError>?)
     var fetchDataEndpointExpectedResult: (Result<U, ApiError>?)
     var fetchDataUrlTextExpectedResult: (Result<Data, ApiError>?)
     
-    func fetchData<T>(urlText: String,
-                      resultType: T.Type,
-                      decodingStrategy: JSONDecoder.KeyDecodingStrategy,
-                      completion: @escaping (Result<T, ApiError>) -> Void
+    public func fetchData<T>(urlText: String,
+                             resultType: T.Type,
+                             decodingStrategy: JSONDecoder.KeyDecodingStrategy,
+                             completion: @escaping (Result<T, ApiError>) -> Void
     ) where T : Decodable {
         do {
             let expectedResult: Result<T, ApiError> = try verify(expectedResult: fetchDataUrlTextWithResultTypeExpectedResult)
@@ -35,9 +35,9 @@ final class NetworkMock: Networking {
         }
     }
     
-    func fetchData<T>(endpoint: EndpointProtocol,
-                      resultType: T.Type,
-                      completion: @escaping (Result<T, ApiError>) -> Void
+    public func fetchData<T>(endpoint: EndpointProtocol,
+                             resultType: T.Type,
+                             completion: @escaping (Result<T, ApiError>) -> Void
     ) where T : Decodable {
         do {
             let expectedResult: Result<T, ApiError> = try verify(expectedResult: fetchDataEndpointExpectedResult)
@@ -47,7 +47,7 @@ final class NetworkMock: Networking {
         }
     }
     
-    func fetchData(urlText: String, completion: @escaping (Result<Data, ApiError>) -> Void) {
+    public func fetchData(urlText: String, completion: @escaping (Result<Data, ApiError>) -> Void) {
         do {
             let expectedResult: Result<Data, ApiError> = try verify(expectedResult: fetchDataUrlTextExpectedResult)
             completion(expectedResult)
