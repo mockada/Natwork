@@ -42,10 +42,10 @@ public protocol Networking {
 }
 
 public final class Network: Networking {
-    private let session: SessionProtocol
+    private let session: URLSessionProtocol
     private let queue: DispatchQueueProtocol
     
-    public init(session: SessionProtocol = URLSession.shared, callbackQueue: DispatchQueueProtocol = DispatchQueue.main) {
+    public init(session: URLSessionProtocol = URLSession.shared, callbackQueue: DispatchQueueProtocol = DispatchQueue.main) {
         self.session = session
         self.queue = callbackQueue
     }

@@ -22,6 +22,7 @@
 		D5D1760E27FCE1BE00BC4546 /* NetworkMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D1760D27FCE1BE00BC4546 /* NetworkMock.swift */; };
 		D5D1761027FCE25D00BC4546 /* Response+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D1760F27FCE25C00BC4546 /* Response+Extensions.swift */; };
 		D5D1761227FCE26B00BC4546 /* Request+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D1761127FCE26B00BC4546 /* Request+Extensions.swift */; };
+		D5D1761427FCEE2400BC4546 /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D1761327FCEE2400BC4546 /* NetworkTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		D5D1760D27FCE1BE00BC4546 /* NetworkMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMock.swift; sourceTree = "<group>"; };
 		D5D1760F27FCE25C00BC4546 /* Response+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Response+Extensions.swift"; sourceTree = "<group>"; };
 		D5D1761127FCE26B00BC4546 /* Request+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+Extensions.swift"; sourceTree = "<group>"; };
+		D5D1761327FCEE2400BC4546 /* NetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTests.swift; sourceTree = "<group>"; };
 		E2DBA7DD852604F7219AAFBD /* Pods-Natwork_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Natwork_Example.debug.xcconfig"; path = "Target Support Files/Pods-Natwork_Example/Pods-Natwork_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F8F69801A03E87AFFB8757A4 /* Pods-Natwork_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Natwork_Example.release.xcconfig"; path = "Target Support Files/Pods-Natwork_Example/Pods-Natwork_Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,6 +156,7 @@
 				D5D1760D27FCE1BE00BC4546 /* NetworkMock.swift */,
 				D5D1760F27FCE25C00BC4546 /* Response+Extensions.swift */,
 				D5D1761127FCE26B00BC4546 /* Request+Extensions.swift */,
+				D5D1761327FCEE2400BC4546 /* NetworkTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5D1761427FCEE2400BC4546 /* NetworkTests.swift in Sources */,
 				D5D1760E27FCE1BE00BC4546 /* NetworkMock.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* ServiceTests.swift in Sources */,
 				D5D1760C27FCD5C900BC4546 /* Endpoint.swift in Sources */,

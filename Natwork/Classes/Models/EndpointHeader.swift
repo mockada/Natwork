@@ -8,4 +8,9 @@
 public struct EndpointHeader {
     public let value: String
     public let field: String
+    
+    public init(value: String, field: String) {
+        self.value = value
+        self.field = field
+    }
 }

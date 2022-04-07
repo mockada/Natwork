@@ -21,6 +21,7 @@ DerivedData
 *.lock
 Example/Pods/
 *.xcworkspace
+Example/Natwork.xcodeproj/
 
 # Bundler
 .bundle
