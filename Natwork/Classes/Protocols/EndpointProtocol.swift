@@ -18,4 +18,6 @@ public extension EndpointProtocol {
     var url: String {
         host.appending(path)
     }
+    var headers: [EndpointHeader] { [] }
+    var params: [String: Any] { [:] }
 }

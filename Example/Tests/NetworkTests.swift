@@ -107,4 +107,66 @@ extension NetworkTests {
         }
         wait(for: [expectation], timeout: 0.1)
     }
+    
+    func testFetchData3() {
+        let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: Data(), response: nil, error: nil)
+        urlSessionMock?.fetchDataWithUrlRequestExpectedResult = completion
+        
+        sut?.fetchData(
+            endpoint: ValidEndpointStub.endpoint,
+            resultType: ResponseStub.self
+        ) { result in
+            XCTAssertEqual(result, .failure(.nilResponse))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+    
+    func testFetchData4() {
+        guard let url = URL(string: "www.google.com") else { return }
+        
+        let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: Data(), response: HTTPURLResponse(url: url, statusCode: 400, httpVersion: nil, headerFields: nil), error: nil)
+        urlSessionMock?.fetchDataWithUrlRequestExpectedResult = completion
+        
+        sut?.fetchData(
+            endpoint: ValidEndpointStub.endpoint,
+            resultType: ResponseStub.self
+        ) { result in
+            XCTAssertEqual(result, .failure(.statusCode(code: .clientError)))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+    
+    func testFetchData5() {
+        let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: nil, response: HTTPURLResponse(), error: nil)
+        urlSessionMock?.fetchDataWithUrlRequestExpectedResult = completion
+        
+        sut?.fetchData(
+            endpoint: ValidEndpointStub.endpoint,
+            resultType: ResponseStub.self
+        ) { result in
+            XCTAssertEqual(result, .failure(.nilData))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+    
+    func testFetchData6() {
+        let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: Data(), response: HTTPURLResponse(), error: nil)
+        urlSessionMock?.fetchDataWithUrlRequestExpectedResult = completion
+        
+        sut?.fetchData(
+            endpoint: ValidEndpointStub.endpoint,
+            resultType: ResponseStub.self
+        ) { result in
+            XCTAssertEqual(result, .failure(.jsonParse))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
 }
