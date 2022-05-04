@@ -146,9 +146,8 @@ private extension Network {
         return request
     }
     
-    func decodeData<T: Decodable>(data: Data?, decodingStrategy: JSONDecoder.KeyDecodingStrategy) -> T? {
-        guard let unwrappedData = data else { return nil }
-        return try? JSONDecoder(keyDecodingStrategy: decodingStrategy).decode(T.self, from: unwrappedData)
+    func decodeData<T: Decodable>(data: Data, decodingStrategy: JSONDecoder.KeyDecodingStrategy) -> T? {
+        try? JSONDecoder(keyDecodingStrategy: decodingStrategy).decode(T.self, from: data)
     }
     
     func verifyError(data: Data?, response: URLResponse?, error: Error?) -> ApiError? {

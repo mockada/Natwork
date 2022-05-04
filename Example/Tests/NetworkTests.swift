@@ -169,4 +169,19 @@ extension NetworkTests {
         }
         wait(for: [expectation], timeout: 0.1)
     }
+    
+    func testFetchData7() {
+        let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: "{}".data(using: .utf8), response: HTTPURLResponse(), error: nil)
+        urlSessionMock?.fetchDataWithUrlRequestExpectedResult = completion
+        
+        sut?.fetchData(
+            endpoint: ValidEndpointStub.endpoint,
+            resultType: ResponseStub.self
+        ) { result in
+            XCTAssertEqual(result, .success(.init()))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
 }
