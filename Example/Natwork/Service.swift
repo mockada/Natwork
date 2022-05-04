@@ -27,7 +27,7 @@ final class Service {
     
     func fetchData(completion: @escaping (Result<[Response], ApiError>) -> Void) {
         network.fetchData(
-            endpoint: Endpoint.searchBy(id: 1),
+            endpoint: SearchByIdEndpoint(id: 1),
             resultType: [Response].self
         ){ result in
             completion(result)
@@ -36,7 +36,7 @@ final class Service {
     
     func updateData(request: Request, completion: @escaping (Result<Response, ApiError>) -> Void) {
         network.fetchData(
-            endpoint: Endpoint.update(id: 1, request: request),
+            endpoint: UpdateRequestEndpoint(id: 1, request: request),
             resultType: Response.self
         ){ result in
             completion(result)

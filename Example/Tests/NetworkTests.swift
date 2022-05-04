@@ -25,19 +25,25 @@ private final class URLSessionMock: URLSessionProtocol {
     }
 }
 
-private final class DispatchQueueMock: DispatchQueueProtocol {
-    var executeCallAsync: (() -> Void)?
-    
-    func callAsync(execute work: @escaping () -> Void) {
-        guard let executeCallAsync = executeCallAsync else {
-            return
-        }
-        callAsync(execute: executeCallAsync)
+private final class DispatchQueueDummy: DispatchQueueProtocol {
+    func callAsync(group: DispatchGroup?, qos: DispatchQoS, flags: DispatchWorkItemFlags, execute work: @escaping () -> Void) {
+        work()
     }
 }
 
-private enum EndpointStub: EndpointProtocol {
-    case endpointCase
+private enum EmptyEndpointStub: EndpointProtocol {
+    case endpoint
+    
+    var host: String { "" }
+    var path: String { "" }
+    var headers: [EndpointHeader] { [] }
+    var params: [String : Any] { ["": ""] }
+    var method: EndpointMethod { .post }
+    var decodingStrategy: JSONDecoder.KeyDecodingStrategy { .useDefaultKeys }
+}
+
+private enum ValidEndpointStub: EndpointProtocol {
+    case endpoint
     
     var host: String { "www.host.com" }
     var path: String { "/path" }
@@ -53,43 +59,52 @@ private struct ResponseStub: Decodable, Equatable {
 
 final class NetworkTests: XCTestCase {
     private var urlSessionMock: URLSessionMock?
-    private var dispatchQueueMock: DispatchQueueMock?
+    private var dispatchQueueDummy: DispatchQueueDummy?
     private var sut: Networking?
     
     override func setUp() {
         urlSessionMock = URLSessionMock()
-        dispatchQueueMock = DispatchQueueMock()
+        dispatchQueueDummy = DispatchQueueDummy()
         
-        guard let urlSessionMock = urlSessionMock, let dispatchQueueMock = dispatchQueueMock else { return }
-        sut = Network(session: urlSessionMock, callbackQueue: dispatchQueueMock)
+        guard let urlSessionMock = urlSessionMock, let dispatchQueueDummy = dispatchQueueDummy else { return }
+        sut = Network(session: urlSessionMock, callbackQueue: dispatchQueueDummy)
         super.setUp()
     }
 
     override func tearDown() {
         urlSessionMock = nil
-        dispatchQueueMock = nil
+        dispatchQueueDummy = nil
         sut = nil
         super.tearDown()
     }
 }
 
 extension NetworkTests {
-    func testFetchData() {
+    func testFetchData1() {
         let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
-        let completion: URLSessionCompletion = (data: Data(), response: URLResponse(), error: ApiError.generic)
-        urlSessionMock?.fetchDataWithUrlRequestExpectedResult = completion
-        dispatchQueueMock?.executeCallAsync = something
         
-        sut?.fetchData(endpoint: EndpointStub.endpointCase,
-                       resultType: ResponseStub.self
+        sut?.fetchData(
+            endpoint: EmptyEndpointStub.endpoint,
+            resultType: ResponseStub.self
         ) { result in
-            XCTAssertEqual(result, .failure(.server(error: ApiError.generic)))
+            XCTAssertEqual(result, .failure(.urlParse))
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.1)
     }
     
-    func something() {
-        print("something")
+    func testFetchData2() {
+        let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: Data(), response: URLResponse(), error: ApiError.generic)
+        urlSessionMock?.fetchDataWithUrlRequestExpectedResult = completion
+        
+        sut?.fetchData(
+            endpoint: ValidEndpointStub.endpoint,
+            resultType: ResponseStub.self
+        ) { result in
+            XCTAssertEqual(result, .failure(.server(error: ApiError.generic)))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
     }
 }

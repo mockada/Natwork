@@ -9,43 +9,25 @@
 import Foundation
 import Natwork
 
-enum Endpoint: EndpointProtocol {
-    case searchBy(id: Int)
-    case update(id: Int, request: Request)
+struct SearchByIdEndpoint: EndpointProtocol {
+    let id: Int
     
-    var host: String { "www.somehost.com" }
+    var path: String { "/search?id=\(id)" }
+    let host: String = "www.somehost.com"
+    let headers: [EndpointHeader] = []
+    let params: [String: Any] = [:]
+    let method: EndpointMethod = .get
+    let decodingStrategy: JSONDecoder.KeyDecodingStrategy = .convertFromSnakeCase
+}
+
+struct UpdateRequestEndpoint: EndpointProtocol {
+    let id: Int
+    let request: Request
     
-    var path: String {
-        switch self {
-        case .searchBy(let id):
-            return "/search?id=\(id)"
-            
-        case .update:
-            return "/update"
-        }
-    }
-    
-    var headers: [EndpointHeader] { [] }
-    
-    var params: [String: Any] {
-        switch self {
-        case .searchBy:
-            return [:]
-            
-        case .update(let id, let request):
-            return ["id": id, "name": request.name]
-        }
-    }
-    
-    var method: EndpointMethod {
-        switch self {
-        case .searchBy:
-            return .get
-            
-        case .update:
-            return .post
-        }
-    }
-    
-    var decodingStrategy: JSONDecoder.KeyDecodingStrategy { .convertFromSnakeCase }
+    var params: [String: Any] { ["id": id, "name": request.name] }
+    let path: String = "/update"
+    let host: String = "www.somehost.com"
+    let headers: [EndpointHeader] = []
+    let method: EndpointMethod = .post
+    let decodingStrategy: JSONDecoder.KeyDecodingStrategy = .convertFromSnakeCase
 }
