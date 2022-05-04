@@ -41,6 +41,17 @@ public protocol Networking {
     )
 }
 
+public extension Networking {
+    func fetchData<T: Decodable>(
+        urlText: String,
+        resultType: T.Type,
+        decodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys,
+        completion: @escaping (Result<T, ApiError>) -> Void
+    ) {
+        fetchData(urlText: urlText, resultType: resultType, decodingStrategy: decodingStrategy, completion: completion)
+    }
+}
+
 public final class Network: Networking {
     private let session: URLSessionProtocol
     private let queue: DispatchQueueProtocol

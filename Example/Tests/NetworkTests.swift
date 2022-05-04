@@ -53,9 +53,7 @@ private enum ValidEndpointStub: EndpointProtocol {
     var decodingStrategy: JSONDecoder.KeyDecodingStrategy { .useDefaultKeys }
 }
 
-private struct ResponseStub: Decodable, Equatable {
-    
-}
+private struct ResponseStub: Decodable, Equatable { }
 
 final class NetworkTests: XCTestCase {
     private var urlSessionMock: URLSessionMock?
@@ -79,9 +77,122 @@ final class NetworkTests: XCTestCase {
     }
 }
 
+// MARK: - Fetch data with url text -> Response
+
 extension NetworkTests {
-    func testFetchData1() {
-        let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+    func testfetchDataUrlText_WhenEmptyEndpoint_ShouldReturnFailureWithUrlParse() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        
+        sut?.fetchData(
+            urlText: EmptyEndpointStub.endpoint.url,
+            resultType: ResponseStub.self
+        ) { result in
+            XCTAssertEqual(result, .failure(.urlParse))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+    
+    func testfetchDataUrlText_WhenValidEndpoint_AndGenericError_ShouldReturnFailureWithServerError() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: Data(), response: URLResponse(), error: ApiError.generic)
+        urlSessionMock?.fetchDataWithUrlExpectedResult = completion
+        
+        sut?.fetchData(
+            urlText: ValidEndpointStub.endpoint.url,
+            resultType: ResponseStub.self
+        ) { result in
+            XCTAssertEqual(result, .failure(.server(error: ApiError.generic)))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+    
+    func testfetchDataUrlText_WhenValidEndpoint_AndNilResponse_ShouldReturnFailureWithNilResponse() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: Data(), response: nil, error: nil)
+        urlSessionMock?.fetchDataWithUrlExpectedResult = completion
+        
+        sut?.fetchData(
+            urlText: ValidEndpointStub.endpoint.url,
+            resultType: ResponseStub.self
+        ) { result in
+            XCTAssertEqual(result, .failure(.nilResponse))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+    
+    func testfetchDataUrlText_WhenValidEndpoint_AndResponseWithClientErrorStatusCode_ShouldReturnFailureWithStatusCode() {
+        guard let url = URL(string: "www.google.com") else { return }
+        
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let response: HTTPURLResponse? = HTTPURLResponse(url: url, statusCode: 400, httpVersion: nil, headerFields: nil)
+        let completion: URLSessionCompletion = (data: Data(), response: response, error: nil)
+        urlSessionMock?.fetchDataWithUrlExpectedResult = completion
+        
+        sut?.fetchData(
+            urlText: ValidEndpointStub.endpoint.url,
+            resultType: ResponseStub.self
+        ) { result in
+            XCTAssertEqual(result, .failure(.statusCode(code: .clientError)))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+    
+    func testfetchDataUrlText_WhenValidEndpoint_AndNilData_ShouldReturnFailureWithNilData() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: nil, response: HTTPURLResponse(), error: nil)
+        urlSessionMock?.fetchDataWithUrlExpectedResult = completion
+        
+        sut?.fetchData(
+            urlText: ValidEndpointStub.endpoint.url,
+            resultType: ResponseStub.self
+        ) { result in
+            XCTAssertEqual(result, .failure(.nilData))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+    
+    func testfetchDataUrlText_WhenValidEndpoint_AndCouldNotConvertDataToResultType_ShouldReturnFailureWithJsonParse() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: Data(), response: HTTPURLResponse(), error: nil)
+        urlSessionMock?.fetchDataWithUrlExpectedResult = completion
+        
+        sut?.fetchData(
+            urlText: ValidEndpointStub.endpoint.url,
+            resultType: ResponseStub.self
+        ) { result in
+            XCTAssertEqual(result, .failure(.jsonParse))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+    
+    func testfetchDataUrlText_WhenValidEndpoint_AndCouldConvertDataToResultType_AndHasHTTPURLResponse_AndErrorIsNil_ShouldReturnSuccess() {
+        guard let data: Data = "{}".data(using: .utf8) else { return }
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: data, response: HTTPURLResponse(), error: nil)
+        urlSessionMock?.fetchDataWithUrlExpectedResult = completion
+        
+        sut?.fetchData(
+            urlText: ValidEndpointStub.endpoint.url,
+            resultType: ResponseStub.self
+        ) { result in
+            XCTAssertEqual(result, .success(.init()))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+}
+
+// MARK: - Fetch data with endpoint -> Response
+
+extension NetworkTests {
+    func testfetchDataEndpoint_WhenEmptyEndpoint_ShouldReturnFailureWithUrlParse() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
         
         sut?.fetchData(
             endpoint: EmptyEndpointStub.endpoint,
@@ -93,8 +204,8 @@ extension NetworkTests {
         wait(for: [expectation], timeout: 0.1)
     }
     
-    func testFetchData2() {
-        let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+    func testfetchDataEndpoint_WhenValidEndpoint_AndGenericError_ShouldReturnFailureWithServerError() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
         let completion: URLSessionCompletion = (data: Data(), response: URLResponse(), error: ApiError.generic)
         urlSessionMock?.fetchDataWithUrlRequestExpectedResult = completion
         
@@ -108,8 +219,8 @@ extension NetworkTests {
         wait(for: [expectation], timeout: 0.1)
     }
     
-    func testFetchData3() {
-        let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+    func testfetchDataEndpoint_WhenValidEndpoint_AndNilResponse_ShouldReturnFailureWithNilResponse() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
         let completion: URLSessionCompletion = (data: Data(), response: nil, error: nil)
         urlSessionMock?.fetchDataWithUrlRequestExpectedResult = completion
         
@@ -123,11 +234,12 @@ extension NetworkTests {
         wait(for: [expectation], timeout: 0.1)
     }
     
-    func testFetchData4() {
-        guard let url = URL(string: "www.google.com") else { return }
+    func testfetchDataEndpoint_WhenValidEndpoint_AndResponseWithClientErrorStatusCode_ShouldReturnFailureWithStatusCode() {
+        guard let url = URL(string: ValidEndpointStub.endpoint.url) else { return }
         
-        let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
-        let completion: URLSessionCompletion = (data: Data(), response: HTTPURLResponse(url: url, statusCode: 400, httpVersion: nil, headerFields: nil), error: nil)
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let response: HTTPURLResponse? = HTTPURLResponse(url: url, statusCode: 400, httpVersion: nil, headerFields: nil)
+        let completion: URLSessionCompletion = (data: Data(), response: response, error: nil)
         urlSessionMock?.fetchDataWithUrlRequestExpectedResult = completion
         
         sut?.fetchData(
@@ -140,8 +252,8 @@ extension NetworkTests {
         wait(for: [expectation], timeout: 0.1)
     }
     
-    func testFetchData5() {
-        let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+    func testfetchDataEndpoint_WhenValidEndpoint_AndNilData_ShouldReturnFailureWithNilData() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
         let completion: URLSessionCompletion = (data: nil, response: HTTPURLResponse(), error: nil)
         urlSessionMock?.fetchDataWithUrlRequestExpectedResult = completion
         
@@ -155,8 +267,8 @@ extension NetworkTests {
         wait(for: [expectation], timeout: 0.1)
     }
     
-    func testFetchData6() {
-        let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+    func testfetchDataEndpoint_WhenValidEndpoint_AndCouldNotConvertDataToResultType_ShouldReturnFailureWithJsonParse() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
         let completion: URLSessionCompletion = (data: Data(), response: HTTPURLResponse(), error: nil)
         urlSessionMock?.fetchDataWithUrlRequestExpectedResult = completion
         
@@ -170,9 +282,10 @@ extension NetworkTests {
         wait(for: [expectation], timeout: 0.1)
     }
     
-    func testFetchData7() {
-        let expectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
-        let completion: URLSessionCompletion = (data: "{}".data(using: .utf8), response: HTTPURLResponse(), error: nil)
+    func testfetchDataEndpoint_WhenValidEndpoint_AndCouldConvertDataToResultType_AndHasHTTPURLResponse_AndErrorIsNil_ShouldReturnSuccess() {
+        guard let data: Data = "{}".data(using: .utf8) else { return }
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: data, response: HTTPURLResponse(), error: nil)
         urlSessionMock?.fetchDataWithUrlRequestExpectedResult = completion
         
         sut?.fetchData(
@@ -180,6 +293,67 @@ extension NetworkTests {
             resultType: ResponseStub.self
         ) { result in
             XCTAssertEqual(result, .success(.init()))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+}
+
+// MARK: - Fetch data with url text -> Data
+
+extension NetworkTests {
+    func testfetchDataUrlText_WhenEmptyUrlText_ShouldReturnFailureWithUrlParse() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: Data(), response: nil, error: nil)
+        urlSessionMock?.fetchDataWithUrlExpectedResult = completion
+        
+        sut?.fetchData(
+            urlText: EmptyEndpointStub.endpoint.url
+        ) { result in
+            XCTAssertEqual(result, .failure(.urlParse))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+    
+    func testfetchDataUrlText_WhenValidUrlText_AndDataIsNil_ShouldReturnFailureWithNilData() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: nil, response: HTTPURLResponse(), error: nil)
+        urlSessionMock?.fetchDataWithUrlExpectedResult = completion
+        
+        sut?.fetchData(
+            urlText: ValidEndpointStub.endpoint.url
+        ) { result in
+            XCTAssertEqual(result, .failure(.nilData))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+    
+    func testfetchDataUrlText_WhenValidUrlText_AndResponseIsNil_ShouldReturnFailureWithNilResponse() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: Data(), response: nil, error: nil)
+        urlSessionMock?.fetchDataWithUrlExpectedResult = completion
+        
+        sut?.fetchData(
+            urlText: ValidEndpointStub.endpoint.url
+        ) { result in
+            XCTAssertEqual(result, .failure(.nilResponse))
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.1)
+    }
+    
+    func testfetchDataUrlText_WhenValidUrlText_AndDataIsNotNil_AndResponseIsNotNil_ShouldReturnSuccess() {
+        guard let data: Data = "{}".data(using: .utf8) else { return }
+        let expectation: XCTestExpectation = XCTestExpectation(description: "fetchDataEndpointExpectedResult")
+        let completion: URLSessionCompletion = (data: data, response: HTTPURLResponse(), error: nil)
+        urlSessionMock?.fetchDataWithUrlExpectedResult = completion
+        
+        sut?.fetchData(
+            urlText: ValidEndpointStub.endpoint.url
+        ) { result in
+            XCTAssertEqual(result, .success(data))
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 0.1)
