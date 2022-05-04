@@ -22,7 +22,7 @@ pod 'Natwork'
 
 ## Author
 
-Jade Silveira, jadecs8@gmail.com
+Jade Silveira
 
 ## License
 
