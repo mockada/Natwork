@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Natwork'
-  s.version          = '0.1.0'
+  s.version          = '0.0.1'
   s.summary          = 'Testable Network in Swift'
   s.description      = <<-DESC
 Natwork is an HTTP networking library written in Swift, which describes the returning error and makes each layer testable.
